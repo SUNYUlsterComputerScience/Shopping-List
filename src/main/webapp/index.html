@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Shopping List</title>
+    </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <body>
+      <script src="js/AddItem.js"></script>
+        <div class="w3-row-padding w3-margin-top">
+            <ul class="w3-ul w3-card-4 w3-hoverable w3-half" id="itemList">
+                <li class="w3-blue"><h2>Items</h2></li>
+                <li class="w3-display-container">
+                    <label for="item">Enter Item:</label><br>
+                    <input type="text" id="item" name="item"><br>
+                    <span onclick="addAction('Add '+document.getElementById('item').value+' To Shopping List');
+                    addAction('Fetch Location Data for '+document.getElementById('item').value);
+                    addItem();"
+                          class="w3-button w3-display-right" style="display: inline; font-size:18.0pt">&plus;</span>
+                </li>
+            </ul>
+            <ul class="w3-ul w3-card-4 w3-hoverable w3-half" id="actionList">
+                <li class="w3-blue"><h2>Actions</h2></li>
+            </ul>
+        </div>
+    </body>
+</html>
