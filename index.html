@@ -6,56 +6,44 @@
     </head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="testScript.js"></script>
     <body>
-        <div class="w3-row-padding w3-margin-top">
-            <ul class="w3-ul w3-card-4 w3-hoverable w3-half" id="itemList">
+        <div class="w3-row-padding w3-margin-top" ng-app="shoppingList" ng-controller="shoppingController">
+            <ul class="w3-ul w3-card-4 w3-half">
                 <li class="w3-blue"><h2>Items</h2></li>
+                <li class="w3-blue">
+                    <select class="w3-round" ng-model="sortBy">
+                        <option value="name" selected>Item Name</option>
+                        <option value="category">Item Category</option>
+                    </select>
+                    <p>{{showShort()}}</p>
+                </li>
                 <li class="w3-display-container">
                     <label for="item">Enter Item:</label><br>
                     <input type="text" id="item" name="item"><br>
                     <span onclick="addAction('Add '+document.getElementById('item').value+' To Shopping List');
                     addAction('Fetch Location Data for '+document.getElementById('item').value);
-                    addItem();"
+
+                    addItem(document.getElementById('item'));"
                           class="w3-button w3-display-right" style="display: inline; font-size:18.0pt">&plus;</span>
+                </li>
+                <li>
+                    <ul class="w3-ul" id="itemList">
+                    </ul>
                 </li>
             </ul>
             <ul class="w3-ul w3-card-4 w3-hoverable w3-half" id="actionList">
                 <li class="w3-blue"><h2>Actions</h2></li>
             </ul>
         </div>
-
         <script>
-            function addItem(){
-                const li = document.createElement("LI");
-                const input = document.getElementById("item");
-                if(input.value === "") return;
-                li.className = "w3-display-container"
-                li.innerHTML = "<span onclick=\"this.parentElement.children[2].src='check.png';\n" +
-                    "                    this.parentElement.children[0].style.display='none';\n" +
-                    "                    this.parentElement.children[1].style.display='inline';\n" +
-                    "                    addAction('Set Completed Flag On "+input.value+"');\"\n" +
-                    "                      class=\"w3-button w3-display-right\" style=\"display: inline\"><b>&check;</b></span>\n" +
-                    "                <span onclick=\"this.parentElement.children[2].src='question.png';\n" +
-                    "                    this.parentElement.children[1].style.display='none';\n" +
-                    "                    this.parentElement.children[0].style.display='inline'\n" +
-                    "                    addAction('Remove Completed Flag From "+input.value+"');\"\n" +
-                    "                      class=\"w3-button w3-display-right\" style=\"display: none\"><b>&times;</b></span>\n" +
-                    "                <img src=\"question.png\" class=\"w3-bar-item w3-circle\" style=\"width:85px\">\n" +
-                    "                <div class=\"w3-bar-item\">\n" +
-                    "                    <span class=\"w3-large\">"+input.value+"</span><br>\n" +
-                    "                    <span>[Fetch Shelf and Isle data]</span>\n" +
-                    "                </div>";
-                input.value = "";
-
-                document.getElementById("itemList").appendChild(li);
-            }
-            function addAction(action){
-                const li = document.createElement("LI");
-                li.className = "w3-display-container"
-                li.innerHTML = "<p>PHP:> "+action+"</p>";
-
-                document.getElementById("actionList").appendChild(li);
-            }
+            angular.module('shoppingList', [])
+                .controller('shoppingController', function($scope) {
+                    $scope.showShort = function() {
+                        reSort($scope.sortBy)
+                    };
+                });
         </script>
     </body>
 </html>
