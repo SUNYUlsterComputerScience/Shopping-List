@@ -1,0 +1,19 @@
+Notes for JWT showcase (Jon Rhea):
+
+*This was building using a Maven project in NetBeans
+
+*The output terminal was always one print out behind what it was actually
+	-For example, no prompt would come up when entering a username.
+	-After you entered the username, the username prompt would show up but the Scanner would be looking for a password.
+	-I was never able to figure out a fix for this, but the program still runs successfully
+
+*You can enter any JWT you created with this program into jwt.io and it will show all three parts
+(Header, Payload, Signature) and what each of the parts stand for.
+
+*In the actual app, we would have a private key and a public key. The public key would be used when a user sends a JWT
+to the server. We would compare it against a private key and they should match. If they don't match, then we know the JWT was
+altered by the user in someway. 
+
+*In summary, the logistics of this program are no where near how the actual app will be, but we can use this as
+a baseline for when we can actually put JWTs into the shopping list app. And when we get to that I am for sure
+going to need help with that!
