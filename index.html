@@ -2,42 +2,45 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Shopping List</title>
+        <title>All Lists</title>
     </head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-	<script src="testScript.js"></script>
+	<script src="lists.js"></script>
+    <script src="globals.js"></script>
     <body>
         <div class="w3-row-padding w3-margin-top" ng-app="shoppingList" ng-controller="shoppingController">
             <ul class="w3-ul w3-card-4 w3-half">
-                <li class="w3-blue"><h2>Items</h2></li>
+                <li class="w3-blue"><h2 id="LocationLine"></h2></li>
+                <li class="w3-blue"><h2>Lists</h2></li>
                 <li class="w3-blue">
                     <select class="w3-round" ng-model="sortBy">
-                        <option value="name" selected>Item Name</option>
-                        <option value="category">Item Category</option>
+                        <option value="name" selected>List Name</option>
+                        <option value="items">Number of Items</option>
                     </select>
                     <p>{{showShort()}}</p>
                 </li>
                 <li class="w3-display-container">
-                    <label for="item">Enter Item:</label><br>
-                    <input type="text" id="item" name="item"><br>
-                    <span onclick="addAction('Add '+document.getElementById('item').value+' To Shopping List');
-                    addAction('Fetch Location Data for '+document.getElementById('item').value);
-
-                    addItem(document.getElementById('item'));"
+                    <label for="listName">Name new list</label><br>
+                    <input type="text" id="listName" name="listName"><br>
+                    <span onclick="addList(document.getElementById('listName'), true);"
                           class="w3-button w3-display-right" style="display: inline; font-size:18.0pt">&plus;</span>
                 </li>
                 <li>
-                    <ul class="w3-ul" id="itemList">
+                    <ul class="w3-ul" id="shoppingLists">
                     </ul>
                 </li>
             </ul>
-            <ul class="w3-ul w3-card-4 w3-hoverable w3-half" id="actionList">
-                <li class="w3-blue"><h2>Actions</h2></li>
-            </ul>
         </div>
         <script>
+            initValues();
+            for (let i = 0; i < ALL_LISTS.length; i++){
+                let tmp = document.createElement("DIV");
+                tmp.value = ALL_LISTS[i][2];
+                addList(tmp, false);
+            }
+            document.getElementById("LocationLine").innerText = "Location: "+LOCATION;
             angular.module('shoppingList', [])
                 .controller('shoppingController', function($scope) {
                     $scope.showShort = function() {

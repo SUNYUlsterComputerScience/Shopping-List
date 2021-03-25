@@ -1,6 +1,6 @@
 const cardList = [];
 //item, isle, shelf, class
-const itemList = [["milk", 0, 0, "dairy"], ["apple", 1, 5, "fruit"]];
+const itemList = [["milk", 0, 0, "dairy"], ["apple", 1, 5, "fruit"], ["walnuts", 17, 2, "nuts"]];
 function itemDetails(item){
 	for (let index = 0; index < itemList.length; ++index) {
 		if(itemList[index][0] === item.toLowerCase())
@@ -44,14 +44,12 @@ function addItem(input){
 	li.className = "w3-display-container"
 	li.innerHTML = "<span onclick=\"this.parentElement.children[2].src='check.png';\n" +
 		"                    this.parentElement.children[0].style.display='none';\n" +
-		"                    this.parentElement.children[1].style.display='inline';\n" +
-		"                    addAction('Set Completed Flag On "+input.value+"');\"\n" +
+		"                    this.parentElement.children[1].style.display='inline';\"\n" +
 		"                      class=\"w3-button w3-display-right\" style=\"display: inline\"><b>&check;</b></span>\n" +
 		"           <div class=\"w3-bar w3-display-right w3-quarter\" style=\"display: none\">\n" +
 		"                <span onclick=\"this.parentElement.parentElement.children[2].src='question.png';\n" +
 		"                    this.parentElement.style.display='none';\n" +
-		"                    this.parentElement.parentElement.children[0].style.display='inline';\n" +
-		"                    addAction('Remove Completed Flag From "+input.value+"');\"\n" +
+		"                    this.parentElement.parentElement.children[0].style.display='inline';\"\n" +
 		"                      class=\"w3-button\" ><b>&times;</b></span>\n" +
 		"				 <span onclick=\"removeCard('"+input.value+"');\"\n" +
 		"                      class=\"w3-button\"><b>&midcir;</b></span>\n" +
@@ -61,7 +59,9 @@ function addItem(input){
 		"               <span class=\"w3-large\">"+input.value+"</span><br>\n" +
 		"               <span id='"+input.value+"CardData'>"+parseDetails(input.value)+"</span>\n" +
 		"           </div>";
-	cardList.push(li)
+	cardList.push(li);
+	ALL_LISTS[EDITING_LIST][3].push(input.value);
+	window.sessionStorage.setItem("ALL_LISTS", JSON.stringify(ALL_LISTS));
 	input.value = "";
 	document.getElementById("itemList").appendChild(li);
 }
@@ -70,6 +70,8 @@ function removeCard(card){
 	for (let index = 0; index < cardList.length; ++index) {
 		if(cardList[index].id === card.toLowerCase()+"Card") {
 			cardList.splice(index, 1);
+			ALL_LISTS[EDITING_LIST][3].splice(index, 1);
+			window.sessionStorage.setItem("ALL_LISTS", JSON.stringify(ALL_LISTS));
 			--index;
 		}
 		else
