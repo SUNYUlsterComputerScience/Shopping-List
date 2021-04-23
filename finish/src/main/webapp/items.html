@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Shopping List</title>
+    </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/drag.js"></script>
+	<script src="js/items.js"></script>
+    <script src="js/globals.js"></script>
+    <body>
+        <button onclick="drawPath(plotPath())">Plot Path</button>
+        <div class="w3-row-padding w3-margin-top" ng-app="shoppingList" ng-controller="shoppingController">
+            <ul class="w3-ul w3-card-4 w3-half">
+                <li class="w3-blue"><button onclick="window.open ('index.html','_self');">Back</button></li>
+                <li class="w3-blue" id="title"><h2>Items</h2></li>
+                <li class="w3-blue">
+                    <select class="w3-round" ng-model="sortBy" id="sortSelect">
+                        <option value="name" selected>Item Name</option>
+                        <option value="category">Item Category</option>
+                        <option value="drag">Custom Order</option>
+                        <option value="pickup">Pickup Order</option>
+                    </select>
+                    <p>{{showShort()}}</p>
+                </li>
+                <li class="w3-display-container">
+                    <label for="item">Enter Item:</label><br>
+                    <input type="text" id="item" name="item"><br>
+                    <span onclick="addItem(document.getElementById('item').value, true);
+                            document.getElementById('item').value=''"
+                          class="w3-button w3-display-right" style="display: inline; font-size:18.0pt">&plus;</span>
+                </li>
+                <li>
+                    <ul class="w3-ul" id="itemList">
+                    </ul>
+                </li>
+            </ul>
+            <ul class="w3-ul w3-card-4 w3-half w3-blue">
+                <li><h2>Map</h2></li>
+                <li>
+                    <div class="w3-card">
+                        <canvas id="mapCanvas" style="border:1px solid #000000; width: 100%; height: 100%"></canvas>
+                    </div>
+                </li>
+                <li>
+                    <p id="info"></p>
+                </li>
+            </ul>
+        </div>
+        <script>
+            document.getElementById("title").innerText += " in '"+ALL_LISTS[EDITING_LIST][2]+"'";
+
+            angular.module('shoppingList', [])
+                .controller('shoppingController', function($scope) {
+                    $scope.showShort = function() {
+                        if($scope.sortBy === undefined)
+                            $scope.sortBy = "name"
+                        reSort($scope.sortBy);
+                    };
+                });
+            initMap();
+        </script>
+    </body>
+</html>
