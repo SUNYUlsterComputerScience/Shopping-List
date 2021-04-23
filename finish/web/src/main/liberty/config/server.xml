@@ -19,8 +19,8 @@
     </featureManager>
     <!-- end::featureManager[] -->
 
-    <variable name="default.http.port" defaultValue="9080"/>
-    <variable name="default.https.port" defaultValue="9443"/>
+    <variable name="default.http.port" defaultValue="7080"/>
+    <variable name="default.https.port" defaultValue="7443"/>
     <variable name="app.context.root" defaultValue="/mongo"/>
 
     <!-- tag::httpEndpoint[] -->

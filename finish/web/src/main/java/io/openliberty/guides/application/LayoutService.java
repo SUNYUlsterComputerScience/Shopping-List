@@ -94,8 +94,8 @@ public class LayoutService {
             description = "Successfully added Food Types."),
         @APIResponse(
             responseCode = "400",
-            description = "Invalid crew member configuration.") })
-    @Operation(summary = "Add a new crew member to the database.")
+            description = "Invalid layout configuration.") })
+    @Operation(summary = "Add a new layout to the database.")
     // tag::add[]
     public Response add(LayoutMap foodItem) {
         JsonArray violations = getViolations(foodItem);
@@ -135,11 +135,11 @@ public class LayoutService {
     @APIResponses({
         @APIResponse(
             responseCode = "200",
-            description = "Successfully listed the crew members."),
+            description = "Successfully listed the layout."),
         @APIResponse(
             responseCode = "500",
-            description = "Failed to list the crew members.") })
-    @Operation(summary = "List the crew members from the database.")
+            description = "Failed to list the layout.") })
+    @Operation(summary = "List the layout map from the database.")
     // tag::retrieve[]
     public Response retrieve() {
         StringWriter sb = new StringWriter();
@@ -181,18 +181,18 @@ public class LayoutService {
     @APIResponses({
         @APIResponse(
             responseCode = "200",
-            description = "Successfully updated crew member."),
+            description = "Successfully updated layout."),
         @APIResponse(
             responseCode = "400",
-            description = "Invalid object id or crew member configuration."),
+            description = "Invalid object id or layout configuration."),
         @APIResponse(
             responseCode = "404",
-            description = "Crew member object id was not found.") })
-    @Operation(summary = "Update a crew member in the database.")
+            description = "Layout object id was not found.") })
+    @Operation(summary = "Update a layout in the database.")
     // tag::update[]
     public Response update(LayoutMap foodItem,
         @Parameter(
-            description = "Object id of the crew member to update.",
+            description = "Object id of the layout to update.",
             required = true
         )
         @PathParam("id") String id) {
@@ -260,18 +260,18 @@ public class LayoutService {
     @APIResponses({
         @APIResponse(
             responseCode = "200",
-            description = "Successfully deleted crew member."),
+            description = "Successfully deleted layout."),
         @APIResponse(
             responseCode = "400",
             description = "Invalid object id."),
         @APIResponse(
             responseCode = "404",
             description = "Food Item object id was not found.") })
-    @Operation(summary = "Delete a crew member from the database.")
+    @Operation(summary = "Delete a layout from the database.")
     // tag::remove[]
     public Response remove(
         @Parameter(
-            description = "Object id of the crew member to delete.",
+            description = "Object id of the layout to delete.",
             required = true
         )
         @PathParam("id") String id) {

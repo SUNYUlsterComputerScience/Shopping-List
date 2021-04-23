@@ -2,6 +2,8 @@
     <!-- tag::featureManager[] -->
     <featureManager>
         <feature>jsp-2.3</feature>
+        <feature>jsonp-1.1</feature>
+        <feature>jaxrs-2.1</feature>
         <feature>appSecurity-2.0</feature>
         <feature>transportSecurity-1.0</feature>
         <feature>mpConfig-1.4</feature>
@@ -14,11 +16,12 @@
         <!-- end::socialLogin[] -->
     </featureManager>
     <!-- end::featureManager[] -->
+    <variable name="default.http.port" defaultValue="5050"/>
+ <variable name="default.https.port" defaultValue="5051"/>
 
-    <httpEndpoint httpPort="${default.http.port}"
-                  httpsPort="${default.https.port}"
-                  id="defaultHttpEndpoint"
-                  host="*" />
+ <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}"
+   id="defaultHttpEndpoint" host="*" />
+
 
     <!-- Set up default key store, trust stores for auth APIs -->
     <!-- tag::keystore[] -->
@@ -41,8 +44,8 @@
     <!-- end::githubLogin[] -->
 
     <!-- tag::webApplication[] -->
-    <webApplication location="oauth.war"
-                    contextRoot="${app.context.root}">
+    <webApplication location="oauth.war" type="war"
+                    contextRoot="/">
         <!-- tag::applicationBnd[] -->
         <application-bnd>
             <!-- tag::users[] -->

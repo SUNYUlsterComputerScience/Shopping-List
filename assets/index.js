@@ -7,5 +7,7 @@ db.createUser({
 // end::createUser[]
 
 // tag::createCollection[]
-db.createCollection("Crew");
+db.createCollection("Food");
+db.createCollection("Layout");
+
 // end::createCollection[]

@@ -94,8 +94,8 @@ public class FoodService {
             description = "Successfully added Food Types."),
         @APIResponse(
             responseCode = "400",
-            description = "Invalid crew member configuration.") })
-    @Operation(summary = "Add a new crew member to the database.")
+            description = "Invalid food item configuration.") })
+    @Operation(summary = "Add a new food item to the database.")
     // tag::add[]
     public Response add(FoodItem foodItem) {
         JsonArray violations = getViolations(foodItem);
@@ -135,11 +135,11 @@ public class FoodService {
     @APIResponses({
         @APIResponse(
             responseCode = "200",
-            description = "Successfully listed the crew members."),
+            description = "Successfully listed the food items."),
         @APIResponse(
             responseCode = "500",
-            description = "Failed to list the crew members.") })
-    @Operation(summary = "List the crew members from the database.")
+            description = "Failed to list the food items.") })
+    @Operation(summary = "List the food items from the database.")
     // tag::retrieve[]
     public Response retrieve() {
         StringWriter sb = new StringWriter();
@@ -181,18 +181,18 @@ public class FoodService {
     @APIResponses({
         @APIResponse(
             responseCode = "200",
-            description = "Successfully updated crew member."),
+            description = "Successfully updated food item."),
         @APIResponse(
             responseCode = "400",
-            description = "Invalid object id or crew member configuration."),
+            description = "Invalid object id or food item configuration."),
         @APIResponse(
             responseCode = "404",
-            description = "Crew member object id was not found.") })
-    @Operation(summary = "Update a crew member in the database.")
+            description = "Food item object id was not found.") })
+    @Operation(summary = "Update a food item in the database.")
     // tag::update[]
     public Response update(FoodItem foodItem,
         @Parameter(
-            description = "Object id of the crew member to update.",
+            description = "Object id of the food item to update.",
             required = true
         )
         @PathParam("id") String id) {
@@ -260,18 +260,18 @@ public class FoodService {
     @APIResponses({
         @APIResponse(
             responseCode = "200",
-            description = "Successfully deleted crew member."),
+            description = "Successfully deleted food item."),
         @APIResponse(
             responseCode = "400",
             description = "Invalid object id."),
         @APIResponse(
             responseCode = "404",
             description = "Food Item object id was not found.") })
-    @Operation(summary = "Delete a crew member from the database.")
+    @Operation(summary = "Delete a food item from the database.")
     // tag::remove[]
     public Response remove(
         @Parameter(
-            description = "Object id of the crew member to delete.",
+            description = "Object id of the food item to delete.",
             required = true
         )
         @PathParam("id") String id) {

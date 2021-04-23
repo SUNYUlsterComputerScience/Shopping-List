@@ -1,16 +1,17 @@
-let c;
+let mapCanvas;
 let ctx;
-let areaTypes = {"grocery": "#30A030", "produce": "#00F060", "seafood": "#0060B0", "meat": "#A04040",
-    "diary": "#9060B0", "checkout": "#776777", "expressCheckout": "#A5A500", "entrance": "#00FF00",
-    "exit": "#FF0000"};
+let areaTypes = {"Baked Goods": "#db9b3c", "Drinks": "#3be2c0", "Prepared Foods": "#97264d", "Meats": "#a31b1b",
+    "Ingredients": "#e86620", "Snacks": "#b7e287", "Produce": "#04d53f", "Seafood": "#1773e3",
+    "Dairy": "#b7e9ff", "Other": "#939393",
+    "checkout": "#1b7e95", "expressCheckout": "#30e2aa", "entrance": "#00FF00", "exit": "#FF0000"};
 //item, isle, shelf, class
-let foodCode = [["pepper", 0, 0, "spices"], ["salt", 0, 0, "spices"], ["crackers", 0, 1, "grain"], ["oats", 0, 1, "grain"],
-    ["walnuts", 1, 2, "nuts"], ["peanuts", 1, 2, "nuts"], ["milk", 7, 0, "dairy"], ["yogurt", 7, 1, "dairy"]];
+let foodCode;// = [["pepper", 0, 0, "spices"], ["salt", 0, 0, "spices"], ["crackers", 0, 1, "grain"], ["oats", 0, 1, "grain"],
+    //["walnuts", 1, 2, "nuts"], ["peanuts", 1, 2, "nuts"], ["milk", 7, 0, "dairy"], ["yogurt", 7, 1, "dairy"]];
 let mapCode;
 function initMap(){
-    c = document.getElementById("mapCanvas");
-    c.addEventListener("click", mapClick);
-    ctx = c.getContext("2d");
+    mapCanvas = document.getElementById("mapCanvas");
+    mapCanvas.addEventListener("click", mapClick);
+    ctx = mapCanvas.getContext("2d");
     let request = new XMLHttpRequest();
     request.onload = function () {
         if (this.status === 200) {
@@ -36,6 +37,10 @@ function initMap(){
 
             console.log(this.responseText);
             foodCode = JSON.parse(this.responseText);
+
+            let importList = ALL_LISTS[EDITING_LIST][3];
+            for(let i=0; i<importList.length; i++)
+                addItem(importList[i], false);
         }
     }
 
@@ -68,24 +73,55 @@ function drawAreas(areaClass){
         }
     }
 }
+function refreshMap(){
+    ctx.clearRect(0, 0, mapCanvas.width, mapCanvas.height);
+    drawAreas("0");
+    drawAreas("1");
+    drawAreas("2");
+    for(let i=0; i<cardList.length; i++){
+        let item = cardList[i][0].id.substring(0, cardList[i][0].id.lastIndexOf("Card"))
+        for (let j = 0; j < foodCode.length; ++j) {
+            if(foodCode[j]["product"].toLowerCase() === item.toLowerCase()) {
+                markCoords(foodCode[j]["asiles"], foodCode[j]["shelf"])
+            }
+        }
+    }
+}
 function markCoords(isleNum, shelfNum){
-    isleNum++;
+    if(Object.keys(mapCode["0"]).indexOf("isle"+isleNum) !== -1) {
+        let isle = mapCode["0"]["isle" + isleNum];
+        let coords = getShelfCoords(isleNum, shelfNum)
+        ctx.fillStyle = "red";
+        ctx.beginPath();
+        console.log("Marking isle "+isleNum+", shelf "+shelfNum+", at x "+coords[0]+", y "+coords[1])
+        if (isle["orientation"] === "y")
+            ctx.arc(coords[0]+isle["sectionDims"][0]/2, coords[1]+((shelfNum+.5)*isle["sectionDims"][1]), 2, 0, 2 * Math.PI);
+        else
+            ctx.arc(coords[0]+((shelfNum+.5)*isle["sectionDims"][0]), coords[1]+isle["sectionDims"][1]/2, 2, 0, 2 * Math.PI);
+        ctx.fill();
+    }
+}
+function getShelfCoords(isleNum, shelfNum){
     if(Object.keys(mapCode["0"]).indexOf("isle"+isleNum) !== -1) {
         let isle = mapCode["0"]["isle" + isleNum];
         if (isle["sections"] > shelfNum) {
-            let coords = isle["coords"];
-            ctx.fillStyle = "red";
-            ctx.beginPath();
-            if (isle["orientation"] === "y")
-                ctx.arc(coords[0]+isle["sectionDims"][0]/2, coords[1]+((shelfNum+.5)*isle["sectionDims"][1]), 2, 0, 2 * Math.PI);
-            else
-                ctx.arc(coords[0]+((shelfNum+.5)*isle["sectionDims"][0]), coords[1]+isle["sectionDims"][1]/2, 2, 0, 2 * Math.PI);
-            ctx.fill();
+            console.log("Coords of isle "+isleNum+" and shelf "+shelfNum+" is x "+isle["coords"][0]+", y "+isle["coords"][1]);
+            return isle["coords"];
+        }
+    }
+}
+function getProductInfo(product){
+    for (let index = 0; index < foodCode.length; ++index) {
+        if(foodCode[index]["product"].toLowerCase() === product.toLowerCase()) {
+            let coords = getShelfCoords(foodCode[index]["asiles"], foodCode[index]["shelf"]);
+            coords.push(foodCode[index]["class"]);
+            coords.push(index);
+            return coords;
         }
     }
 }
 function mapClick(event) {
-    let coords = [c.getBoundingClientRect().left, c.getBoundingClientRect().top, c.getBoundingClientRect().width, c.getBoundingClientRect().height]
+    let coords = [mapCanvas.getBoundingClientRect().left, mapCanvas.getBoundingClientRect().top, mapCanvas.getBoundingClientRect().width, mapCanvas.getBoundingClientRect().height]
     let x = (event.clientX-coords[0])/coords[2]*300;
     let y = (event.clientY-coords[1])/coords[3]*150;
 
@@ -122,7 +158,7 @@ function checkAreas(x, y, areaClass){
                 }
                 let shelfItems = [];
                 let inShoppingList = [];
-                document.getElementById("info").innerText = areaClass === "0" ? "Isle "+(i+1)+", Shelf "+(j+1) : "Register "+(i+1);
+                document.getElementById("info").innerText = areaClass === "0" ? "Isle "+(i)+", Shelf "+(j+1) : "Register "+(i+1);
                 for(let k=0; k<foodCode.length && areaClass === "0"; k++)
                     if(foodCode[k]["asiles"] === i && foodCode[k]["shelf"] === j) {
                         shelfItems.push(foodCode[k]["product"]);
@@ -141,4 +177,56 @@ function checkAreas(x, y, areaClass){
             }
         }
     }
+}
+
+function drawPath(orderedList){
+    refreshMap();
+    ctx.beginPath();
+    ctx.moveTo(mapCode[2]["door1"]["coords"][0], mapCode[2]["door1"]["coords"][1]);
+    let isle = mapCode["0"]["isle" + foodCode[orderedList[0][5]]["asiles"]];
+    if (isle["orientation"] === "y")
+        ctx.lineTo(orderedList[0][1] + isle["sectionDims"][0] / 2, orderedList[0][2] + ((foodCode[orderedList[0][5]]["shelf"] + .5) * isle["sectionDims"][1]));
+    else
+        ctx.lineTo(orderedList[0][1] + ((foodCode[orderedList[0][5]]["shelf"] + .5) * isle["sectionDims"][0]), orderedList[0][2] + isle["sectionDims"][1] / 2);
+    ctx.stroke();
+    for(let i=0; i<orderedList.length-1; i++){
+        console.log("Marking (1) , at x "+orderedList[i][1]+", y "+orderedList[i][2])
+        console.log("Marking (2) , at x2 "+orderedList[i+1][1]+", y2 "+orderedList[i+1][2])
+        ctx.beginPath();
+        isle = mapCode["0"]["isle" + foodCode[orderedList[i][5]]["asiles"]];
+        if (isle["orientation"] === "y")
+            ctx.moveTo(orderedList[i][1] + isle["sectionDims"][0] / 2, orderedList[i][2] + ((foodCode[orderedList[i][5]]["shelf"] + .5) * isle["sectionDims"][1]));
+        else
+            ctx.moveTo(orderedList[i][1] + ((foodCode[orderedList[i][5]]["shelf"] + .5) * isle["sectionDims"][0]), orderedList[i][2] + isle["sectionDims"][1] / 2);
+
+        isle = mapCode["0"]["isle" + foodCode[orderedList[i+1][5]]["asiles"]];
+        if (isle["orientation"] === "y")
+            ctx.lineTo(orderedList[i+1][1] + isle["sectionDims"][0] / 2, orderedList[i+1][2] + ((foodCode[orderedList[i+1][5]]["shelf"] + .5) * isle["sectionDims"][1]));
+        else
+            ctx.lineTo(orderedList[i+1][1] + ((foodCode[orderedList[i+1][5]]["shelf"] + .5) * isle["sectionDims"][0]), orderedList[i+1][2] + isle["sectionDims"][1] / 2);
+        //ctx.moveTo(orderedList[i][1], orderedList[i][2]);
+        //ctx.lineTo(orderedList[i+1][1], orderedList[i+1][2]);
+        ctx.stroke();
+    }
+    ctx.beginPath();
+    isle = mapCode["0"]["isle" + foodCode[orderedList[orderedList.length-1][5]]["asiles"]];
+    if (isle["orientation"] === "y")
+        ctx.moveTo(orderedList[orderedList.length-1][1] + isle["sectionDims"][orderedList.length-1] / 2, orderedList[orderedList.length-1][2] + ((foodCode[orderedList[orderedList.length-1][5]]["shelf"] + .5) * isle["sectionDims"][1]));
+    else
+        ctx.moveTo(orderedList[orderedList.length-1][1] + ((foodCode[orderedList[orderedList.length-1][5]]["shelf"] + .5) * isle["sectionDims"][orderedList.length-1]), orderedList[orderedList.length-1][2] + isle["sectionDims"][1] / 2);
+
+    if(orderedList.length > 10) {
+        ctx.lineTo(mapCode[1]["register1"]["coords"][0], mapCode[1]["register1"]["coords"][1]);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(mapCode[1]["register1"]["coords"][0], mapCode[1]["register1"]["coords"][1]);
+    }
+    else {
+        ctx.lineTo(mapCode[1]["register6"]["coords"][0], mapCode[1]["register6"]["coords"][1]);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(mapCode[1]["register6"]["coords"][0], mapCode[1]["register6"]["coords"][1]);
+    }
+    ctx.lineTo(mapCode[2]["door2"]["coords"][0], mapCode[2]["door2"]["coords"][1]);
+    ctx.stroke();
 }

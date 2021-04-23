@@ -16,14 +16,14 @@
         <!-- OpenLiberty runtime -->
         <version.openliberty-runtime>RELEASE</version.openliberty-runtime>
         <!-- tag::defaultHttpPort[] -->
-        <liberty.var.default.http.port>9080</liberty.var.default.http.port>
+        <web.service.http.port>7080</web.service.http.port>
         <!-- end::defaultHttpPort[] -->
         <!-- tag::defaultHttpsPort[] -->
-        <liberty.var.default.https.port>9443</liberty.var.default.https.port>
+        <web.service.https.port>7443</web.service.https.port>
         <!-- end::defaultHttpsPort[] -->
         <app.name>${project.artifactId}</app.name>
         <!-- tag::appContextRoot[] -->
-        <liberty.var.app.context.root>/mongo</liberty.var.app.context.root>
+        <web.service.context.root>/mongo</web.service.context.root>
         <!-- end::appContextRoot[] -->
         <package.file>${project.build.directory}/${app.name}.zip</package.file>
     </properties>
@@ -135,8 +135,8 @@
                 <configuration>
                     <!-- tag::testsysprops[] -->
                     <systemPropertyVariables>
-                        <app.http.port>${liberty.var.default.http.port}</app.http.port>
-                        <app.context.root>${liberty.var.app.context.root}</app.context.root>
+                        <app.http.port>${web.service.http.port}</app.http.port>
+                        <app.context.root>${web.service.app.context.root}</app.context.root>
                     </systemPropertyVariables>
                     <!-- end::testsysprops[] -->
                 </configuration>

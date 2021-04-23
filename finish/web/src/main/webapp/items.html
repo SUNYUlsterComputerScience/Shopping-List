@@ -13,6 +13,7 @@
 	<script src="js/items.js"></script>
     <script src="js/globals.js"></script>
     <body>
+        <button onclick="drawPath(plotPath())">Plot Path</button>
         <div class="w3-row-padding w3-margin-top" ng-app="shoppingList" ng-controller="shoppingController">
             <ul class="w3-ul w3-card-4 w3-half">
                 <li class="w3-blue"><button onclick="window.open ('index.html','_self');">Back</button></li>
@@ -22,13 +23,15 @@
                         <option value="name" selected>Item Name</option>
                         <option value="category">Item Category</option>
                         <option value="drag">Custom Order</option>
+                        <option value="pickup">Pickup Order</option>
                     </select>
                     <p>{{showShort()}}</p>
                 </li>
                 <li class="w3-display-container">
                     <label for="item">Enter Item:</label><br>
                     <input type="text" id="item" name="item"><br>
-                    <span onclick="addItem(document.getElementById('item'));"
+                    <span onclick="addItem(document.getElementById('item').value, true);
+                            document.getElementById('item').value=''"
                           class="w3-button w3-display-right" style="display: inline; font-size:18.0pt">&plus;</span>
                 </li>
                 <li>
@@ -49,7 +52,8 @@
             </ul>
         </div>
         <script>
-            //document.getElementById("title").innerText += " in '"+ALL_LISTS[EDITING_LIST][2]+"'";
+            document.getElementById("title").innerText += " in '"+ALL_LISTS[EDITING_LIST][2]+"'";
+
             angular.module('shoppingList', [])
                 .controller('shoppingController', function($scope) {
                     $scope.showShort = function() {

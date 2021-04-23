@@ -64,7 +64,7 @@ function addList(input, updateALL){
 	li.className = "w3-display-container"
 	li.innerHTML = "<span onclick=\"removeCard('"+input.value+"');\"\n" +
 		"                      class=\"w3-button w3-display-right\" style=\"display: inline\"><b>&times;</b></span>\n" +
-		"           <img src=\"../question.png\" class=\"w3-bar-item w3-circle\" style=\"width:85px\"" +
+		"           <img src=\"img/question.png\" class=\"w3-bar-item w3-circle\" style=\"width:85px\"" +
 		"			onclick=\"cardClick("+listId+")\">\n" +
 		"           <div class=\"w3-bar-item\">\n" +
 		"               <span class=\"w3-large\">"+input.value+"</span><br>\" "+

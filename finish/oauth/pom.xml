@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -16,13 +16,13 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <!-- tag::defaultHttpPort[] -->
-        <liberty.var.default.http.port>9081</liberty.var.default.http.port>
+        <oauth.service.http.port>5050</oauth.service.http.port>
         <!-- end::defaultHttpPort[] -->
         <!-- tag::defaultHttpsPort[] -->
-        <liberty.var.default.https.port>9444</liberty.var.default.https.port>
+        <oauth.service.https.port>5051</oauth.service.https.port>
         <!-- end::defaultHttpsPort[] -->
         <!-- tag::appContextRoot[] -->
-        <liberty.var.app.context.root>api</liberty.var.app.context.root>
+        <oauth.service.context.root>api</oauth.service.context.root>
         <!-- end::appContextRoot[] -->
     </properties>
 
@@ -90,6 +90,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
+                <configuration>
+                  <systemPropertyVariables>
+                      <oauth.service.http.port>${oauth.service.http.port}</oauth.service.http.port>
+                  </systemPropertyVariables>
+              </configuration>
             </plugin>
         </plugins>
     </build>

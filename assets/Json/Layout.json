@@ -1,0 +1,299 @@
+[{
+  "_id": {
+    "$oid": "607e33ecb2264e05fc75aa5a"
+  },
+  "isle1": {
+    "coords": [
+      20,
+      20
+    ],
+    "sections": 7,
+    "sectionDims": [
+      5,
+      10
+    ],
+    "orientation": "y",
+    "type": "Produce"
+  },
+  "isle2": {
+    "coords": [
+      26,
+      20
+    ],
+    "sections": 7,
+    "sectionDims": [
+      5,
+      10
+    ],
+    "orientation": "y",
+    "type": "Meats"
+  },
+  "isle3": {
+    "coords": [
+      46,
+      20
+    ],
+    "sections": 7,
+    "sectionDims": [
+      5,
+      10
+    ],
+    "orientation": "y",
+    "type": "Prepared Foods"
+  },
+  "isle4": {
+    "coords": [
+      52,
+      20
+    ],
+    "sections": 7,
+    "sectionDims": [
+      5,
+      10
+    ],
+    "orientation": "y",
+    "type": "Ingredients"
+  },
+  "isle5": {
+    "coords": [
+      0,
+      30
+    ],
+    "sections": 7,
+    "sectionDims": [
+      5,
+      10
+    ],
+    "orientation": "y",
+    "type": "Baked Goods"
+  },
+  "isle6": {
+    "coords": [
+      10,
+      0
+    ],
+    "sections": 7,
+    "sectionDims": [
+      10,
+      5
+    ],
+    "orientation": "x",
+    "type": "Drinks"
+  },
+  "isle7": {
+    "coords": [
+      90,
+      0
+    ],
+    "sections": 7,
+    "sectionDims": [
+      10,
+      5
+    ],
+    "orientation": "x",
+    "type": "Snacks"
+  },
+  "isle8": {
+    "coords": [
+      200,
+      0
+    ],
+    "sections": 7,
+    "sectionDims": [
+      10,
+      5
+    ],
+    "orientation": "x",
+    "type": "Seafood"
+  },
+  "isle9": {
+    "coords": [
+      72,
+      20
+    ],
+    "sections": 7,
+    "sectionDims": [
+      5,
+      10
+    ],
+    "orientation": "y",
+    "type": "Dairy"
+  },
+  "isle10": {
+    "coords": [
+      78,
+      20
+    ],
+    "sections": 7,
+    "sectionDims": [
+      5,
+      10
+    ],
+    "orientation": "y",
+    "type": "Other"
+  },
+  "isle11": {
+    "coords": [
+      98,
+      20
+    ],
+    "sections": 7,
+    "sectionDims": [
+      5,
+      10
+    ],
+    "orientation": "y",
+    "type": "Other"
+  },
+  "isle12": {
+    "coords": [
+      104,
+      20
+    ],
+    "sections": 7,
+    "sectionDims": [
+      5,
+      10
+    ],
+    "orientation": "y",
+    "type": "Other"
+  },
+  "isle13": {
+    "coords": [
+      124,
+      20
+    ],
+    "sections": 7,
+    "sectionDims": [
+      5,
+      10
+    ],
+    "orientation": "y",
+    "type": "Other"
+  },
+  "isle14": {
+    "coords": [
+      130,
+      20
+    ],
+    "sections": 7,
+    "sectionDims": [
+      5,
+      10
+    ],
+    "orientation": "y",
+    "type": "Other"
+  }
+},{
+  "_id": {
+    "$oid": "607e33ecb2264e05fc75aa5b"
+  },
+  "register1": {
+    "coords": [
+      190,
+      100
+    ],
+    "sections": 1,
+    "sectionDims": [
+      5,
+      15
+    ],
+    "orientation": "y",
+    "type": "checkout"
+  },
+  "register2": {
+    "coords": [
+      200,
+      100
+    ],
+    "sections": 1,
+    "sectionDims": [
+      5,
+      15
+    ],
+    "orientation": "y",
+    "type": "checkout"
+  },
+  "register3": {
+    "coords": [
+      190,
+      120
+    ],
+    "sections": 1,
+    "sectionDims": [
+      5,
+      15
+    ],
+    "orientation": "y",
+    "type": "checkout"
+  },
+  "register4": {
+    "coords": [
+      200,
+      120
+    ],
+    "sections": 1,
+    "sectionDims": [
+      5,
+      15
+    ],
+    "orientation": "y",
+    "type": "checkout"
+  },
+  "register5": {
+    "coords": [
+      230,
+      100
+    ],
+    "sections": 1,
+    "sectionDims": [
+      5,
+      10
+    ],
+    "orientation": "y",
+    "type": "expressCheckout"
+  },
+  "register6": {
+    "coords": [
+      230,
+      115
+    ],
+    "sections": 1,
+    "sectionDims": [
+      5,
+      10
+    ],
+    "orientation": "y",
+    "type": "expressCheckout"
+  }
+},{
+  "_id": {
+    "$oid": "607e33ecb2264e05fc75aa5c"
+  },
+  "door1": {
+    "coords": [
+      270,
+      145
+    ],
+    "sections": 1,
+    "sectionDims": [
+      20,
+      5
+    ],
+    "orientation": "x",
+    "type": "entrance"
+  },
+  "door2": {
+    "coords": [
+      230,
+      145
+    ],
+    "sections": 1,
+    "sectionDims": [
+      20,
+      5
+    ],
+    "orientation": "x",
+    "type": "exit"
+  }
+}]
